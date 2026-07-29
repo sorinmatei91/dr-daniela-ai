@@ -198,8 +198,16 @@ def receive_message():
             )
 
     for entry in data.get("entry", []):
+        print("🔎 ENTRY ID:", entry.get("id"))
         for event in entry.get("messaging", []):
+            print("🔎 EVENT COMPLET:", event)
+            
             sender_id = event.get("sender", {}).get("id")
+            recipient_id = event.get("recipient", {}).get("id")
+
+            print("🔎 SENDER ID:", sender_id)
+            print("🔎 RECIPIENT ID:", recipient_id)
+
             message = event.get("message", {})
             postback = event.get("postback")
 
