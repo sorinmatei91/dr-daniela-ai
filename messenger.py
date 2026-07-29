@@ -85,46 +85,60 @@ def send_instagram_message(recipient_id, message_text):
         print("❌ INSTAGRAM_ACCESS_TOKEN LIPSEȘTE")
         return
 
-    url = f"{GRAPH_URL}/me/messages"
+    if not recipient_id:
+        print("❌ RECIPIENT ID LIPSEȘTE")
+        return
 
-    params = {
-        "access_token": INSTAGRAM_ACCESS_TOKEN
+    url = "https://graph.instagram.com/v24.0/me/messages"
+
+    headers = {
+        "Authorization": f"Bearer {INSTAGRAM_ACCESS_TOKEN}",
+        "Content-Type": "application/json",
     }
 
     payload = {
         "recipient": {
-            "id": recipient_id
+            "id": str(recipient_id),
         },
         "message": {
-            "text": message_text
-        }
+            "text": message_text,
+        },
     }
 
     print("📤 TRIMIT MESAJ INSTAGRAM")
     print("Recipient:", recipient_id)
     print("Text:", message_text)
+    print("Token încărcat:", bool(INSTAGRAM_ACCESS_TOKEN))
+    print("Lungime token:", len(INSTAGRAM_ACCESS_TOKEN))
 
-    response = requests.post(
-        url,
-        params=params,
-        json=payload,
-        timeout=30
-    )
+    try:
+        response = requests.post(
+            url,
+            headers=headers,
+            json=payload,
+            timeout=30,
+        )
 
-    print(
-        "📨 Instagram RESPONSE:",
-        response.status_code,
-        response.text
-    )
+        print(
+            "📨 Instagram RESPONSE:",
+            response.status_code,
+            response.text,
+        )
 
-    if response.status_code != 200:
-        print("❌ INSTAGRAM ERROR:")
-        print(response.text)
-        return
+        if response.status_code != 200:
+            print("❌ INSTAGRAM ERROR:")
+            print(response.text)
+            return
 
-    response.raise_for_status()
+        response.raise_for_status()
+        print("✅ Mesaj Instagram trimis cu succes")
 
+    except requests.exceptions.Timeout:
+        print("❌ Instagram request timeout")
 
+    except requests.exceptions.RequestException as error:
+        print("❌ Instagram request error:", error)
+        
 def send_button_message(recipient_id, text, buttons):
     """
     Trimite mesaj Facebook Messenger cu butoane URL.
