@@ -7,23 +7,35 @@ load_dotenv()
 
 
 PAGE_ACCESS_TOKEN = os.getenv("PAGE_ACCESS_TOKEN")
+INSTAGRAM_ACCESS_TOKEN = os.getenv("INSTAGRAM_ACCESS_TOKEN")
+
 
 if PAGE_ACCESS_TOKEN:
-    print("✅ TOKEN LOADED:", PAGE_ACCESS_TOKEN[:20])
+    print("✅ FACEBOOK TOKEN LOADED:", PAGE_ACCESS_TOKEN[:20])
 else:
-    print("❌ PAGE_ACCESS_TOKEN LIPSESTE")
+    print("❌ PAGE_ACCESS_TOKEN LIPSEȘTE")
+
+
+if INSTAGRAM_ACCESS_TOKEN:
+    print("✅ INSTAGRAM TOKEN LOADED:", INSTAGRAM_ACCESS_TOKEN[:20])
+else:
+    print("❌ INSTAGRAM_ACCESS_TOKEN LIPSEȘTE")
 
 
 GRAPH_URL = "https://graph.facebook.com/v25.0"
-
+FACEBOOK_PAGE_ID = "1103317229542953"
 
 
 def send_message(recipient_id, message_text):
     """
-    Trimite mesaj text către utilizator în Messenger.
+    Trimite mesaj text către utilizator în Facebook Messenger.
     """
 
-    url = f"{GRAPH_URL}/1103317229542953/messages"
+    if not PAGE_ACCESS_TOKEN:
+        print("❌ PAGE_ACCESS_TOKEN LIPSEȘTE")
+        return
+
+    url = f"{GRAPH_URL}/{FACEBOOK_PAGE_ID}/messages"
 
     params = {
         "access_token": PAGE_ACCESS_TOKEN
@@ -39,12 +51,9 @@ def send_message(recipient_id, message_text):
         }
     }
 
-
     print("📤 TRIMIT MESAJ FACEBOOK")
     print("Recipient:", recipient_id)
     print("Text:", message_text)
-    print("Token:", PAGE_ACCESS_TOKEN[:20] if PAGE_ACCESS_TOKEN else "LIPSESTE")
-
 
     response = requests.post(
         url,
@@ -53,34 +62,83 @@ def send_message(recipient_id, message_text):
         timeout=30
     )
 
-
     print(
         "📨 Messenger RESPONSE:",
         response.status_code,
         response.text
-    ),
+    )
 
     if response.status_code != 200:
         print("❌ FACEBOOK ERROR:")
         print(response.text)
         return
 
+    response.raise_for_status()
+
+
+def send_instagram_message(recipient_id, message_text):
+    """
+    Trimite mesaj text către utilizator în Instagram.
+    """
+
+    if not INSTAGRAM_ACCESS_TOKEN:
+        print("❌ INSTAGRAM_ACCESS_TOKEN LIPSEȘTE")
+        return
+
+    url = f"{GRAPH_URL}/me/messages"
+
+    params = {
+        "access_token": INSTAGRAM_ACCESS_TOKEN
+    }
+
+    payload = {
+        "recipient": {
+            "id": recipient_id
+        },
+        "message": {
+            "text": message_text
+        }
+    }
+
+    print("📤 TRIMIT MESAJ INSTAGRAM")
+    print("Recipient:", recipient_id)
+    print("Text:", message_text)
+
+    response = requests.post(
+        url,
+        params=params,
+        json=payload,
+        timeout=30
+    )
+
+    print(
+        "📨 Instagram RESPONSE:",
+        response.status_code,
+        response.text
+    )
+
+    if response.status_code != 200:
+        print("❌ INSTAGRAM ERROR:")
+        print(response.text)
+        return
 
     response.raise_for_status()
 
 
-
 def send_button_message(recipient_id, text, buttons):
     """
-    Trimite Messenger cu butoane URL.
+    Trimite mesaj Facebook Messenger cu butoane URL.
     """
 
-    url = f"{GRAPH_URL}/1103317229542953/messages"
+    if not PAGE_ACCESS_TOKEN:
+        print("❌ PAGE_ACCESS_TOKEN LIPSEȘTE")
+        return
+
+    url = f"{GRAPH_URL}/{FACEBOOK_PAGE_ID}/messages"
 
     params = {
         "access_token": PAGE_ACCESS_TOKEN
     }
-
 
     payload = {
         "recipient": {
@@ -99,14 +157,12 @@ def send_button_message(recipient_id, text, buttons):
         }
     }
 
-
     response = requests.post(
         url,
         params=params,
         json=payload,
         timeout=30
     )
-
 
     print(
         "🔘 Button Messenger:",
@@ -114,22 +170,28 @@ def send_button_message(recipient_id, text, buttons):
         response.text
     )
 
+    if response.status_code != 200:
+        print("❌ FACEBOOK BUTTON ERROR:")
+        print(response.text)
+        return
 
     response.raise_for_status()
 
 
-
 def send_postback_buttons(recipient_id, text, buttons):
     """
-    Trimite Messenger cu butoane postback.
+    Trimite mesaj Facebook Messenger cu butoane postback.
     """
 
-    url = f"{GRAPH_URL}/1103317229542953/messages"
+    if not PAGE_ACCESS_TOKEN:
+        print("❌ PAGE_ACCESS_TOKEN LIPSEȘTE")
+        return
+
+    url = f"{GRAPH_URL}/{FACEBOOK_PAGE_ID}/messages"
 
     params = {
         "access_token": PAGE_ACCESS_TOKEN
     }
-
 
     payload = {
         "recipient": {
@@ -148,7 +210,6 @@ def send_postback_buttons(recipient_id, text, buttons):
         }
     }
 
-
     response = requests.post(
         url,
         params=params,
@@ -156,19 +217,24 @@ def send_postback_buttons(recipient_id, text, buttons):
         timeout=30
     )
 
-
     print(
         "🔘 Postback Messenger:",
         response.status_code,
         response.text
     )
 
+    if response.status_code != 200:
+        print("❌ FACEBOOK POSTBACK ERROR:")
+        print(response.text)
+        return
 
     response.raise_for_status()
 
 
-
 def send_programare_postback(recipient_id):
+    """
+    Trimite butonul de programare în Facebook Messenger.
+    """
 
     send_postback_buttons(
         recipient_id,
@@ -183,8 +249,14 @@ def send_programare_postback(recipient_id):
     )
 
 
-
 def setup_get_started():
+    """
+    Configurează butonul Get Started pentru Facebook Messenger.
+    """
+
+    if not PAGE_ACCESS_TOKEN:
+        print("❌ PAGE_ACCESS_TOKEN LIPSEȘTE")
+        return
 
     url = f"{GRAPH_URL}/me/messenger_profile"
 
@@ -192,13 +264,11 @@ def setup_get_started():
         "access_token": PAGE_ACCESS_TOKEN
     }
 
-
     payload = {
         "get_started": {
             "payload": "GET_STARTED"
         }
     }
-
 
     response = requests.post(
         url,
@@ -207,27 +277,34 @@ def setup_get_started():
         timeout=30
     )
 
-
     print(
         "🚀 Get Started:",
         response.status_code,
         response.text
     )
 
+    if response.status_code != 200:
+        print("❌ GET STARTED ERROR:")
+        print(response.text)
+        return
 
     response.raise_for_status()
 
 
-
 def setup_persistent_menu():
+    """
+    Configurează meniul permanent pentru Facebook Messenger.
+    """
+
+    if not PAGE_ACCESS_TOKEN:
+        print("❌ PAGE_ACCESS_TOKEN LIPSEȘTE")
+        return
 
     url = f"{GRAPH_URL}/me/messenger_profile"
-
 
     params = {
         "access_token": PAGE_ACCESS_TOKEN
     }
-
 
     payload = {
         "persistent_menu": [
@@ -255,7 +332,6 @@ def setup_persistent_menu():
         ]
     }
 
-
     response = requests.post(
         url,
         params=params,
@@ -263,20 +339,21 @@ def setup_persistent_menu():
         timeout=30
     )
 
-
     print(
         "📋 Persistent Menu:",
         response.status_code,
         response.text
     )
 
+    if response.status_code != 200:
+        print("❌ PERSISTENT MENU ERROR:")
+        print(response.text)
+        return
 
     response.raise_for_status()
 
 
-
 if __name__ == "__main__":
-
     print("Configurare Messenger...")
 
     setup_get_started()
