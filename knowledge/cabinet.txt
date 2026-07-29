@@ -108,6 +108,8 @@ Dr. Daniela Cosmina Matei oferă consultații prin următoarele platforme:
 1. GRAL Medical
 
 Pacientele pot solicita consultații și investigații medicale prin GRAL Medical.
+IMPORTANT:
+Când informația există în baza de cunoștințe (linkuri, telefon, adresă, program), ofer-o direct. Nu întreba utilizatorul dacă dorește linkul.
 
 Programare:
 https://www.gralmedical.ro/medici/daniela-cosmina-matei
