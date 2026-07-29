@@ -8,8 +8,13 @@ load_dotenv()
 
 PAGE_ACCESS_TOKEN = os.getenv("FACEBOOK_PAGE_ACCESS_TOKEN")
 
-GRAPH_URL = "https://graph.facebook.com/v23.0"
+if PAGE_ACCESS_TOKEN:
+    print("✅ TOKEN LOADED:", PAGE_ACCESS_TOKEN[:20])
+else:
+    print("❌ FACEBOOK_PAGE_ACCESS_TOKEN LIPSESTE")
 
+
+GRAPH_URL = "https://graph.facebook.com/v25.0"
 
 
 
@@ -18,12 +23,11 @@ def send_message(recipient_id, message_text):
     Trimite mesaj text către utilizator în Messenger.
     """
 
-    url = f"{GRAPH_URL}/me/messages"
+    url = f"{GRAPH_URL}/1103317229542953/messages"
 
     params = {
         "access_token": PAGE_ACCESS_TOKEN
     }
-
 
     payload = {
         "recipient": {
@@ -36,6 +40,12 @@ def send_message(recipient_id, message_text):
     }
 
 
+    print("📤 TRIMIT MESAJ FACEBOOK")
+    print("Recipient:", recipient_id)
+    print("Text:", message_text)
+    print("Token:", PAGE_ACCESS_TOKEN[:20] if PAGE_ACCESS_TOKEN else "LIPSESTE")
+
+
     response = requests.post(
         url,
         params=params,
@@ -45,24 +55,27 @@ def send_message(recipient_id, message_text):
 
 
     print(
-        "📨 Messenger:",
+        "📨 Messenger RESPONSE:",
         response.status_code,
         response.text
-    )
+    ),
+
+    if response.status_code != 200:
+        print("❌ FACEBOOK ERROR:")
+        print(response.text)
+        return
 
 
     response.raise_for_status()
 
 
 
-
-
 def send_button_message(recipient_id, text, buttons):
     """
-    Trimite mesaj Messenger cu butoane URL.
+    Trimite Messenger cu butoane URL.
     """
 
-    url = f"{GRAPH_URL}/me/messages"
+    url = f"{GRAPH_URL}/1103317229542953/messages"
 
     params = {
         "access_token": PAGE_ACCESS_TOKEN
@@ -106,14 +119,12 @@ def send_button_message(recipient_id, text, buttons):
 
 
 
-
-
 def send_postback_buttons(recipient_id, text, buttons):
     """
-    Trimite mesaj Messenger cu butoane interne postback.
+    Trimite Messenger cu butoane postback.
     """
 
-    url = f"{GRAPH_URL}/me/messages"
+    url = f"{GRAPH_URL}/1103317229542953/messages"
 
     params = {
         "access_token": PAGE_ACCESS_TOKEN
@@ -147,7 +158,7 @@ def send_postback_buttons(recipient_id, text, buttons):
 
 
     print(
-        "🔘 Postback Buttons:",
+        "🔘 Postback Messenger:",
         response.status_code,
         response.text
     )
@@ -157,12 +168,7 @@ def send_postback_buttons(recipient_id, text, buttons):
 
 
 
-
-
 def send_programare_postback(recipient_id):
-    """
-    Trimite buton pentru programare.
-    """
 
     send_postback_buttons(
         recipient_id,
@@ -178,15 +184,9 @@ def send_programare_postback(recipient_id):
 
 
 
-
-
 def setup_get_started():
-    """
-    Configurează butonul Începe din Messenger.
-    """
 
     url = f"{GRAPH_URL}/me/messenger_profile"
-
 
     params = {
         "access_token": PAGE_ACCESS_TOKEN
@@ -219,13 +219,7 @@ def setup_get_started():
 
 
 
-
-
 def setup_persistent_menu():
-    """
-    Configurează meniul permanent Messenger.
-    """
-
 
     url = f"{GRAPH_URL}/me/messenger_profile"
 
@@ -281,16 +275,11 @@ def setup_persistent_menu():
 
 
 
-
-
 if __name__ == "__main__":
 
     print("Configurare Messenger...")
 
-
     setup_get_started()
-
     setup_persistent_menu()
-
 
     print("Gata.")

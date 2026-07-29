@@ -9,6 +9,7 @@ load_dotenv()
 
 from memory import add_message, get_conversation
 from openai_client import generate_ai_response
+from rate_limit import can_use_ai
 
 
 from messenger import (
@@ -29,8 +30,16 @@ from intents import (
 
 app = Flask(__name__)
 
+@app.route("/health", methods=["GET"])
+def health():
+    return {
+        "status": "ok",
+        "service": "Dr Daniela AI Messenger Bot"
+    }, 200
+
 
 VERIFY_TOKEN = os.getenv("VERIFY_TOKEN")
+PAGE_ACCESS_TOKEN = os.getenv("PAGE_ACCESS_TOKEN")
 
 
 with open("system_prompt.txt", "r", encoding="utf-8") as file:
@@ -132,11 +141,27 @@ def receive_message():
                 if payload == "GET_STARTED":
 
 
-                    send_message(
+                    send_postback_buttons(
                         sender_id,
-                        "Bună ziua! Sunt Asistentul Virtual al Dr. Daniela Matei.\n\n"
-                        "Vă pot ajuta cu informații despre programări, servicii medicale "
-                        "și întrebări generale despre sănătatea feminină."
+                        "Bună ziua! Sunt Asistentul Virtual al Dr. Daniela Matei.\n\n",
+                                [
+            {
+                "type": "postback",
+                "title": "📅 Programare consultație",
+                "payload": "PROGRAMARE"
+            },
+            {
+                "type": "postback",
+                "title": "👩‍⚕️ Servicii medicale",
+                "payload": "SERVICII"
+            },
+            {
+                "type": "postback",
+                "title": "💬 Pune o întrebare",
+                "payload": "INTREBARE"
+            }
+        ]
+    
                     )
 
 
@@ -248,6 +273,45 @@ def receive_message():
             if not user_text:
 
                 continue
+                        # ==============================
+            # RASPUNSURI SIMPLE FARA AI
+            # ==============================
+
+            simple_messages = {
+
+                "salut":
+                "Bună ziua! Sunt Asistentul Virtual al Dr. Daniela Matei. Vă pot ajuta cu informații despre servicii medicale, programări și întrebări generale despre sănătatea feminină.",
+
+                "buna":
+                "Bună ziua! Sunt Asistentul Virtual al Dr. Daniela Matei. Vă pot ajuta cu informații despre servicii medicale, programări și întrebări generale despre sănătatea feminină.",
+
+                "bună":
+                "Bună ziua! Sunt Asistentul Virtual al Dr. Daniela Matei. Vă pot ajuta cu informații despre servicii medicale, programări și întrebări generale despre sănătatea feminină.",
+
+                "multumesc":
+                "Cu drag! Dacă aveți întrebări despre servicii medicale sau programări, vă pot ajuta.",
+
+                "mulțumesc":
+                "Cu drag! Dacă aveți întrebări despre servicii medicale sau programări, vă pot ajuta.",
+
+                "mersi":
+                "Cu drag! Sunt aici dacă aveți nevoie de informații despre consultații sau programări.",
+
+                "ok":
+                "Dacă aveți nevoie de alte informații despre serviciile Dr. Daniela Matei, vă pot ajuta."
+            }
+
+
+            if user_text.lower().strip() in simple_messages:
+
+
+                send_message(
+                    sender_id,
+                    simple_messages[user_text.lower().strip()]
+                )
+
+
+                continue
 
 
 
@@ -308,6 +372,19 @@ def receive_message():
 
 
                 conversation = get_conversation(sender_id)
+                if not can_use_ai(sender_id):
+
+                    send_message(
+                        sender_id,
+                        "Vă mulțumesc pentru mesaj. Pentru a putea ajuta cât mai multe persoane, conversația automată are o limită temporară. Pentru programări sau informații suplimentare puteți folosi opțiunile disponibile."
+                    )
+
+                    continue
+
+
+                print(
+                    f"🧠 Mesaje trimise către OpenAI: {len(conversation)}"
+                )
 
 
                 ai_response = generate_ai_response(
@@ -417,6 +494,14 @@ def receive_message():
 
                 conversation = get_conversation(sender_id)
 
+                if not can_use_ai(sender_id):
+
+                    send_message(
+        sender_id,
+        "Vă mulțumesc pentru mesaj. Pentru a putea ajuta cât mai multe persoane, conversația automată are o limită temporară. Pentru programare sau informații suplimentare puteți folosi opțiunile disponibile."
+    )
+                    continue
+       
 
                 print(
                     f"🧠 Mesaje trimise către OpenAI: {len(conversation)}"
@@ -494,5 +579,5 @@ if __name__ == "__main__":
     app.run(
         host="0.0.0.0",
         port=5000,
-        debug=True
+        debug=False
     )

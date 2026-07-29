@@ -6,10 +6,19 @@ def detect_programare(text):
         "vreau la medic",
         "vreau consultație",
         "vreau consultatie",
+        "vreau un consult",
+        "as vrea un consult",
+        "aș vrea un consult",
         "cum mă programez",
         "cum ma programez",
         "aș vrea o consultație",
-        "as vrea o consultatie"
+        "as vrea o consultatie",
+        "aș vrea să fac o programare",
+        "as vrea sa fac o programare",
+        "vreau o programare",
+        "doresc o programare",
+        "doresc sa ma programez",
+        "vreau sa ma programez"
     ]
 
     text = text.lower()
@@ -18,6 +27,7 @@ def detect_programare(text):
         keyword in text
         for keyword in keywords
     )
+
 
 
 
@@ -33,7 +43,12 @@ def detect_locatie(text):
         "la ce clinica",
         "unde este cabinetul",
         "unde o găsesc",
-        "unde o gasesc"
+        "unde o gasesc",
+        "unde pot merge",
+        "unde se află",
+        "unde se afla",
+        "locatie",
+        "locație"
     ]
 
     text = text.lower()
@@ -42,6 +57,7 @@ def detect_locatie(text):
         keyword in text
         for keyword in keywords
     )
+
 
 
 
@@ -63,10 +79,15 @@ def detect_urgent_symptoms(text):
         "durere puternica",
         "durere severă",
         "durere severa",
+        "durere foarte mare",
+        "durere insuportabilă",
+        "durere insuportabila",
         "amețeală",
         "ameteala",
         "leșin",
-        "lesin"
+        "lesin",
+        "pierdere de sânge",
+        "pierdere de sange"
     ]
 
     text = text.lower()
@@ -79,6 +100,7 @@ def detect_urgent_symptoms(text):
 
 
 
+
 def detect_servicii(text):
 
     keywords = [
@@ -86,14 +108,10 @@ def detect_servicii(text):
         "ce servicii",
         "ce faceți",
         "ce faceti",
-        "ecografie",
-        "papanicolau",
-        "test papanicolau",
-        "sterilet",
-        "menopauză",
-        "menopauza",
-        "contracepție",
-        "contraceptie"
+        "ce oferiți",
+        "ce oferiti",
+        "ce consultații aveți",
+        "ce consultatii aveti"
     ]
 
     text = text.lower()
