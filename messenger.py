@@ -6,12 +6,12 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-PAGE_ACCESS_TOKEN = os.getenv("FACEBOOK_PAGE_ACCESS_TOKEN")
+PAGE_ACCESS_TOKEN = os.getenv("PAGE_ACCESS_TOKEN")
 
 if PAGE_ACCESS_TOKEN:
     print("✅ TOKEN LOADED:", PAGE_ACCESS_TOKEN[:20])
 else:
-    print("❌ FACEBOOK_PAGE_ACCESS_TOKEN LIPSESTE")
+    print("❌ PAGE_ACCESS_TOKEN LIPSESTE")
 
 
 GRAPH_URL = "https://graph.facebook.com/v25.0"
