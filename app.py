@@ -121,6 +121,8 @@ def receive_message():
                 "https://www.reginamaria.ro/medici/dr-matei-daniela-cosmina\n\n"
                 "💻 Medic Chat:\n"
                 "https://www.medic.chat/doctors/gch6So2Aas4zsHE79"
+                "🏥 ANN Medical:\n"
+                "https://annclinic.ro/servicii/obstetrica-ginecologie\n\n"
             )
         else:
             send_button_message(
@@ -135,6 +137,14 @@ def receive_message():
                             "daniela-cosmina-matei"
                         ),
                         "title": "🏥 GRAL Medical",
+                    },
+                                        {
+                        "type": "web_url",
+                        "url": (
+                            "https://annclinic.ro/servicii/obstetrica-ginecologie"
+                            "dr-matei-daniela-cosmina"
+                        ),
+                        "title": "🏥 ANN Medical",
                     },
                     {
                         "type": "web_url",
