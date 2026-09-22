@@ -117,18 +117,18 @@ def receive_message():
                 "una dintre platformele următoare:\n\n"
                 "🏥 GRAL Medical:\n"
                 "https://www.gralmedical.ro/medici/daniela-cosmina-matei\n\n"
+                "🏥 ANN Medical:\n"
+                "https://annclinic.ro/servicii/obstetrica-ginecologie\n\n"
                 "🏥 Regina Maria:\n"
                 "https://www.reginamaria.ro/medici/dr-matei-daniela-cosmina\n\n"
                 "💻 Medic Chat:\n"
                 "https://www.medic.chat/doctors/gch6So2Aas4zsHE79"
-                "🏥 ANN Medical:\n"
-                "https://annclinic.ro/servicii/obstetrica-ginecologie\n\n"
             )
         else:
             send_button_message(
                 recipient_id,
                 "Pentru programare la Dr. Daniela Matei, "
-                "alegeți platforma dorită:",
+                "alegeți clinica dorită:",
                 [
                     {
                         "type": "web_url",
@@ -138,11 +138,11 @@ def receive_message():
                         ),
                         "title": "🏥 GRAL Medical",
                     },
-                                        {
+                    {
                         "type": "web_url",
                         "url": (
-                            "https://annclinic.ro/servicii/obstetrica-ginecologie"
-                            "dr-matei-daniela-cosmina"
+                            "https://annclinic.ro/servicii/"
+                            "obstetrica-ginecologie"
                         ),
                         "title": "🏥 ANN Medical",
                     },
@@ -153,14 +153,6 @@ def receive_message():
                             "dr-matei-daniela-cosmina"
                         ),
                         "title": "🏥 Regina Maria",
-                    },
-                    {
-                        "type": "web_url",
-                        "url": (
-                            "https://www.medic.chat/doctors/"
-                            "gch6So2Aas4zsHE79"
-                        ),
-                        "title": "💻 Medic Chat",
                     },
                 ],
             )
