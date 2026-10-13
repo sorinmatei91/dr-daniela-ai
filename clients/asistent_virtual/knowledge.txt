@@ -1,0 +1,29 @@
+PROFIL DE TEST – MEDIC PEDIATRU
+
+Nume medic:
+Dr. Andrei Popescu
+
+Specialitate:
+Pediatrie
+
+Cabinet:
+Cabinet Pediatric Zâmbet
+
+Locație:
+Strada Florilor nr. 25, București
+
+Program:
+Luni–Vineri: 09:00–17:00
+
+Servicii:
+- Consultații pediatrice
+- Monitorizarea dezvoltării copilului
+- Consultații pentru nou-născuți și sugari
+- Evaluarea simptomelor acute
+- Consiliere pentru părinți
+
+Programări:
+Programările se fac telefonic la 0700 000 000.
+
+IMPORTANT:
+Toate informațiile de mai sus sunt fictive și sunt folosite exclusiv pentru testarea sistemului multi-medic.
