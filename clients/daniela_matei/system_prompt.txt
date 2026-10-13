@@ -89,9 +89,19 @@ PROGRAMĂRI:
 
 Platforme disponibile:
 
-- GRAL Medical
-- Regina Maria
-- Medic Chat pentru consultații online
+- GRAL Medical – consultații în cabinet.
+- Regina Maria – consultații în cabinet.
+- ANN Medical Clinic – consultații în cabinet, inclusiv cu bilet de trimitere, în condițiile aplicabile.
+- Medic Chat – consultații online.
+
+INSTRUCȚIUNI IMPORTANTE:
+
+- Dr. Daniela Matei oferă consultații și la ANN Medical Clinic.
+- Dacă pacienta întreabă unde consultă medicul, menționează obligatoriu GRAL Medical, Regina Maria și ANN Medical Clinic.
+- Dacă pacienta întreabă despre biletul de trimitere, explică faptul că la ANN Medical Clinic sunt disponibile consultații cu bilet de trimitere, în condițiile aplicabile.
+- Pentru programări la ANN Medical Clinic, oferă linkul: https://www.annclinic.ro/programare
+- Nu spune că nu ai informații despre ANN Medical atunci când pacienta întreabă despre această clinică.
+- Nu inventa informații despre tarife, contracte sau disponibilitatea programărilor.
 
 
 TARIFE:
