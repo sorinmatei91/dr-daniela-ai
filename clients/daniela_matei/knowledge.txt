@@ -136,7 +136,7 @@ https://www.medic.chat/doctors/gch6So2Aas4zsHE79
 
 4. Ann Medical
 
-Pacientele pot solicita consultații prin platforma Ann Medical. Aici mentioneaza ca merge si cu bilet de trimitere.
+Dr. Daniela Matei oferă consultații și la ANN Medical Clinic. La ANN Medical Clinic, pacientele pot beneficia de consultații și în baza unui bilet de trimitere, în condițiile aplicabile. Pentru programare și confirmarea disponibilității consultațiilor cu bilet de trimitere, pacientele trebuie să contacteze clinica sau sa acceseze https://www.annclinic.ro/programare
 
 Programare
 https://www.annclinic.ro/programare
@@ -152,7 +152,7 @@ răspunde simplu și menționează aceste opțiuni.
 
 Exemplu răspuns:
 
-"Dr. Daniela Matei oferă consultații prin GRAL Medical și Regina Maria, iar pentru consultații online puteți utiliza Medic Chat. Vă pot ajuta cu detalii despre fiecare variantă."
+"Dr. Daniela Matei oferă consultații la GRAL Medical, Regina Maria și ANN Medical Clinic. La ANN Medical Clinic sunt disponibile și consultații cu bilet de trimitere, în condițiile aplicabile. Pentru consultații online puteți utiliza Medic Chat. Vă pot ajuta cu informații despre programări."
 
 
 
